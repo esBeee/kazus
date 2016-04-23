@@ -1,0 +1,8 @@
+Description:
+    Copies an initializer file into config/initializers/
+
+Example:
+    rails generate kazus:install
+
+    This will create:
+        config/initializers/kazus.rb
