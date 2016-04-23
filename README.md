@@ -17,7 +17,7 @@ Kazus.log :error, "Unexpected validation errors", "@statement" => @statement, "A
 which logs
 
 ```
-[KAZUS|error] Unexpected validation errors -- RELATED OBJECTS:       0.0| TITLE: @statement | CLASS: Statement | ERRORS: User must exist, body can't be blank | INSPECT: #<Statement id: nil, user_id: nil, body: nil, created_at: nil, updated_at: nil> | TO_S: #<Statement:0x007f9a971683c8> |0.0       0.1| TITLE: Some other important value | CLASS: Fixnum | INSPECT: 5 |0.1
+[KAZUS|error] Unexpected validation errors -- RELATED OBJECTS:       0.0| TITLE: @statement | CLASS: Statement | ERRORS: User must exist, body can't be blank | INSPECT: #<Statement id: nil, user_id: nil, body: nil, created_at: nil, updated_at: nil> | TO_S: #<Statement:0x007f9a971683c8> |0.0       0.1| TITLE: Another value | CLASS: Fixnum | INSPECT: 5 |0.1
 ```
 
 or simply
@@ -162,7 +162,7 @@ will output
 
 ## TODO
 
-Right now, the log message gets created every time you call ```Kazus.log```, even if the app is configured to not log a message with a low level like the level you might chosen for your ```Kazus.log``` call. I'll appreciate if anyone hints to a possible solution. Until then, you might not want to spread tons of ```Kazus.log(:debug)``` calls all over your app, but rather use it to log in unexpected situations or to quickly debug something, with the intention to remove the method call shortly after.
+Right now, the log message gets created every time you call ```Kazus.log```, even if the app is configured to not log a message with a low level like the level you might have chosen for your ```Kazus.log``` call. I'll appreciate if anyone hints to a possible solution. Until then, you might not want to spread tons of ```Kazus.log(:debug)``` calls all over your app, but rather use it to log in unexpected situations or to quickly debug something, with the intention to remove the method call shortly after.
 
 ## Contributing
 
