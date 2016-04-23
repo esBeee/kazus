@@ -37,7 +37,7 @@ to log
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'kazus'
+gem 'kazus', git: 'git://github.com/esBeee/kazus.git'
 ```
 
 And then execute:
