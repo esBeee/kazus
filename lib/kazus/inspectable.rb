@@ -44,6 +44,9 @@ module Kazus
       "       " + id_string(true) + print_data + id_string(false)
     end
 
+
+    private
+
     # A simple helper that stores a key-value-pair in the @data hash.
     def pick_up_data name, information
       @data[name] = information

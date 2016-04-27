@@ -18,6 +18,26 @@ module Kazus
         return log(:warn, error_message)
       end
 
+      # Let #map_args decide what the log level will be, what incident description
+      # will be logged, and what objects will be inspected.
+      log_level, incident_description, objects_to_inspect = map_args(args)
+
+      incident = Incident.new(
+        log_level: log_level,
+        description: incident_description,
+        objects_to_inspect: objects_to_inspect
+      )
+      incident.log
+    end
+
+
+    private
+
+    # Takes an array and decides based on it, what will be the log level,
+    # the incident description and the objects to be inspected.
+    # Returns an array with those 3 parts:
+    # => [log_level, incident_description, objects_to_inspect]
+    def map_args args
       # Set log level, incident description, and objects to be inspected.
       #
       # Note: if standardize_log_level(args[0]) is nil, the first argument isn't a valid log level.
@@ -56,12 +76,7 @@ module Kazus
         end
       end
 
-      incident = Incident.new(
-        log_level: log_level,
-        description: incident_description,
-        objects_to_inspect: objects_to_inspect
-      )
-      incident.log
+      [log_level, incident_description, objects_to_inspect]
     end
   end
 end

@@ -32,6 +32,9 @@ module Kazus
       end
     end
 
+
+    private
+
     # Returns the inspection of the various objects to be logged.
     def objects_to_inspect_inspection
       return "" if @objects_to_inspect.empty?
