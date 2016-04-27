@@ -94,6 +94,10 @@ or
 
   * "debug", "info", "warn", "error", "fatal" or "unknown"
 
+or
+
+  * "DEBUG", "INFO", "WARN", "ERROR", "FATAL" or "UNKNOWN"
+
 it will be interpreted as - surprise - log level. If it's anything else, every argument, including the first, will be interpreted as objects to be inspected. The log level will then default to :debug.
 
 If the second argument is a string (while the first argument is a valid log level), it will be interpreted as the incident description (which only has a meaning for formatting of the log message). If it's anything else, it will be interpreted as an object to be inspected as all following arguments are, too.

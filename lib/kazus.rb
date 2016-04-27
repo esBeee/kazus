@@ -89,7 +89,7 @@ module Kazus
         return nil if log_level < 0 # Prevent the next line from handing out anything in this case
         LOG_LEVELS[log_level] # Returns nil if log_level > 5
       else
-        requested_log_level_symbol = log_level.class == String ? log_level.to_sym : log_level
+        requested_log_level_symbol = log_level.class == String ? log_level.downcase.to_sym : log_level
         LOG_LEVELS.include?(requested_log_level_symbol) ? requested_log_level_symbol : nil
       end
     end

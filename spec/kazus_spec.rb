@@ -95,29 +95,6 @@ describe Kazus do
             Kazus.log(:debug, nil, 1)
           end
         end
-
-        %w(error warn info debug unknown fatal).each do |valid_log_level|
-          it "'#{valid_log_level}' as string" do
-            expected_message = "[KAZUS|#{valid_log_level}] This and that went wrong"
-            expect(logger).to receive(valid_log_level.to_sym).with(expected_message)
-            Kazus.log(valid_log_level, "This and that went wrong")
-          end
-
-          it "':#{valid_log_level}'" do
-            expected_message = "[KAZUS|#{valid_log_level}] This and that went wrong"
-            expect(logger).to receive(valid_log_level.to_sym).with(expected_message)
-            Kazus.log(valid_log_level.to_sym, "This and that went wrong")
-          end
-        end
-
-        (0..5).each do |valid_log_level|
-          it "'#{valid_log_level}' as integer" do
-            symbol_representation = Kazus::LOG_LEVELS[valid_log_level]
-            expected_message = "[KAZUS|#{symbol_representation}] This and that went wrong"
-            expect(logger).to receive(symbol_representation).with(expected_message)
-            Kazus.log(valid_log_level, "This and that went wrong")
-          end
-        end
       end
 
       describe "special data types" do
@@ -177,6 +154,37 @@ describe Kazus do
               "ERRORS: [] | INSPECT: #<Double \"ar_object\"> | TO_S: #[Double \"ar_object\"] |0"
             expect(logger).to receive(:debug).with(expected_message)
             Kazus.log(ar_object)
+          end
+        end
+      end
+
+      describe "valid log levels are" do
+        %w(error warn info debug unknown fatal).each do |valid_log_level|
+          it "'#{valid_log_level}' as string" do
+            expected_message = "[KAZUS|#{valid_log_level}] This and that went wrong"
+            expect(logger).to receive(valid_log_level.to_sym).with(expected_message)
+            Kazus.log(valid_log_level, "This and that went wrong")
+          end
+
+          it "'#{valid_log_level.upcase}' as string" do
+            expected_message = "[KAZUS|#{valid_log_level}] This and that went wrong"
+            expect(logger).to receive(valid_log_level.to_sym).with(expected_message)
+            Kazus.log(valid_log_level.upcase, "This and that went wrong")
+          end
+
+          it "':#{valid_log_level}'" do
+            expected_message = "[KAZUS|#{valid_log_level}] This and that went wrong"
+            expect(logger).to receive(valid_log_level.to_sym).with(expected_message)
+            Kazus.log(valid_log_level.to_sym, "This and that went wrong")
+          end
+        end
+
+        (0..5).each do |valid_log_level|
+          it "'#{valid_log_level}' as integer" do
+            symbol_representation = Kazus::LOG_LEVELS[valid_log_level]
+            expected_message = "[KAZUS|#{symbol_representation}] This and that went wrong"
+            expect(logger).to receive(symbol_representation).with(expected_message)
+            Kazus.log(valid_log_level, "This and that went wrong")
           end
         end
       end
