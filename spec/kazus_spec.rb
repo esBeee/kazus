@@ -40,11 +40,17 @@ describe Kazus do
       end
 
       context "when first argument is not a valid log level" do
-        it "logs all given objects on log level :debug" do
+        it "logs an inspection of all given objects if it is not a string" do
           expected_message = "[KAZUS|debug] RELATED OBJECTS:       0| CLASS: Fixnum | INSPECT: -1 |0       1| CLASS: " +
             "String | INSPECT: \"Something\" | TO_S: Something |1       2| CLASS: Array | COUNT: 0 | INSPECT: [] |2"
           expect(logger).to receive(:debug).with(expected_message)
           Kazus.log(-1, "Something", [])
+        end
+
+        it "uses the argument as description if it is a string" do
+          expected_message = "[KAZUS|debug] Something happened"
+          expect(logger).to receive(:debug).with(expected_message)
+          Kazus.log("Something happened")
         end
       end
 
@@ -53,6 +59,18 @@ describe Kazus do
           expected_message = "[KAZUS|debug] RELATED OBJECTS:       0| CLASS: Symbol | INSPECT: :unknown | TO_S: unknown |0"
           expect(logger).to receive(:debug).with(expected_message)
           Kazus.log(:unknown)
+        end
+
+        it "uses it as description if there's only one argument" do
+          expected_message = "[KAZUS|debug] unknown"
+          expect(logger).to receive(:debug).with(expected_message)
+          Kazus.log("unknown")
+        end
+
+        it "uses it as log level if there's more than one argument" do
+          expected_message = "[KAZUS|unknown] RELATED OBJECTS:       0| CLASS: Fixnum | INSPECT: 1 |0"
+          expect(logger).to receive(:unknown).with(expected_message)
+          Kazus.log("unknown", 1)
         end
 
         context "when second argument is a string" do

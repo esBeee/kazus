@@ -80,9 +80,9 @@ Kazus provides only one method:
 
 Can be called with an arbitrary amount of arguments without raising an exception. It doesn't make sense to call it without arguments, though. It'll log a warning in this case.
 
-If there's only one argument given, it will be interpreted as an object to be inspected and logged at level :debug.
+If there's only one argument given, it will be interpreted as the incident description if it's a string or else as an object to be inspected. The log level will be set to `debug` in this case.
 
-Else if the first argument is a valid log level, which is one of
+Else, if the first argument is a valid log level, which is one of
 
   * 0, 1, 2, 3, 4 or 5
 
@@ -102,7 +102,7 @@ The third and any following argument will always be interpreted as objects to be
 
 ### Pattern
 
-All messages include the sequence of letters ```KAZUS```. I use this to parse the logs for important messages. If you want to parse for certain log levels, for example ```fatal```, the pattern is ```KAZUS|fatal```. Same goes for any other log level named above.
+All messages include the sequence of letters ```[KAZUS|```. I use this to parse the logs for important messages. If you want to parse for certain log levels, for example ```fatal```, the pattern is ```[KAZUS|fatal]```. Same goes for any other log level named above.
 
 ## Examples
 
@@ -163,6 +163,10 @@ will output
 ## TODO
 
 Right now, the log message gets created every time you call ```Kazus.log```, even if the app is configured to not log a message with a low level like the level you might have chosen for your ```Kazus.log``` call. I'll appreciate if anyone hints to a possible solution. Until then, you might not want to spread tons of ```Kazus.log(:debug)``` calls all over your app, but rather use it to log in unexpected situations or to quickly debug something, with the intention to remove the method call shortly after.
+
+* Solve log level problem.
+
+* Inform about no errors if errors.full_messages exists and is empty
 
 ## Contributing
 

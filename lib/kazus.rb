@@ -18,21 +18,31 @@ module Kazus
         return log(:warn, error_message)
       end
 
-      # If Incident.standardize_log_level is nil, the first argument isn't a valid log level. Assume that
-      # EVERY given argument is an object to be inspected in this case.
-      # Also, if there is only one argument, treat it as an object to be inspected.
+      # Set log level, incident description, and objects to be inspected.
+      #
+      # Note: if standardize_log_level(args[0]) is nil, the first argument isn't a valid log level.
+      #
+      # Note also, that within this line the log level gets set (for use in
+      # the else-block).
       if args.length == 1 || (log_level=Incident.standardize_log_level(args[0])).nil?
         # Log as :debug
         log_level = :debug
 
-        # Assume all objects are to be inspected.
-        objects_to_inspect = args
+        # If the first argument is a string, use it as description.
+        if args[0].class == String
+          incident_description = args[0]
 
-        # Inform about log_level was chosen by kazus in the description. Since the user
-        # didn't deliver a description this seems like an appropriate place.
-        incident_description = nil
+          # Inspect all further objects.
+          objects_to_inspect = args[1..args.length] || []
+        else
+          # No incident description in this case
+          incident_description = nil
+
+          # Assume all objects are to be inspected.
+          objects_to_inspect = args
+        end
       else
-        # The first argument was a valid log level. Let's check if the second argument
+        # The first argument is a valid log level. Let's check if the second argument
         # is a string. It will then be interpreted as the incident description, potentially followed
         # by objects to be inspected.
         # If it's something else, interpret this and all following arguments as objects
