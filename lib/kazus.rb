@@ -44,7 +44,7 @@ module Kazus
       #
       # Note also, that within this line the log level gets set (for use in
       # the else-block).
-      if args.length == 1 || (log_level=Incident.standardize_log_level(args[0])).nil?
+      if args.length == 1 || (log_level=standardize_log_level(args[0])).nil?
         # Log as :debug
         log_level = :debug
 
@@ -77,6 +77,21 @@ module Kazus
       end
 
       [log_level, incident_description, objects_to_inspect]
+    end
+
+    # Takes the log level as integer (0, 1, ... , 5) or as string/symbol
+    # (:debug, :info, :warn, :error, :fatal, :unknown) and returns the log level
+    # as symbol.
+    #
+    # Returns nil if given log_level is not valid.
+    def standardize_log_level log_level
+      if log_level.class == Fixnum
+        return nil if log_level < 0 # Prevent the next line from handing out anything in this case
+        LOG_LEVELS[log_level] # Returns nil if log_level > 5
+      else
+        requested_log_level_symbol = log_level.class == String ? log_level.to_sym : log_level
+        LOG_LEVELS.include?(requested_log_level_symbol) ? requested_log_level_symbol : nil
+      end
     end
   end
 end

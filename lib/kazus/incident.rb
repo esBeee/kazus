@@ -56,22 +56,5 @@ module Kazus
       # Return the collective inspection.
       inspection
     end
-
-    class << self
-      # Takes the log level as integer (0, 1, ... , 5) or as string/symbol
-      # (:debug, :info, :warn, :error, :fatal, :unknown) and returns the log level
-      # as symbol.
-      #
-      # Returns nil if given log_level is not valid.
-      def standardize_log_level log_level
-        if log_level.class == Fixnum
-          return nil if log_level < 0 # Prevent the next line from handing out anything in this case
-          LOG_LEVELS[log_level] # Returns nil if log_level > 5
-        else
-          requested_log_level_symbol = log_level.class == String ? log_level.to_sym : log_level
-          LOG_LEVELS.include?(requested_log_level_symbol) ? requested_log_level_symbol : nil
-        end
-      end
-    end
   end
 end
