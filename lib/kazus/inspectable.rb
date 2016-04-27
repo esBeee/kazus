@@ -82,7 +82,10 @@ module Kazus
     # Collect the given title.
     def collect_title title
       if title
-        pick_up_data("TITLE", title.to_s)
+        # If this is a symbol turn it into a well readable string
+        # For example ":some_value" should become "Some value".
+        message = title.class == Symbol ? title.to_s.gsub("_", " ").capitalize : title.to_s
+        pick_up_data("TITLE", message)
       end
     end
 

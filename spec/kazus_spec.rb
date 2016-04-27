@@ -133,10 +133,10 @@ describe Kazus do
 
         it "logs a Hash detailed as last argument" do
           expected_message = "[KAZUS|debug] Something went wrong -- RELATED OBJECTS:       0| CLASS: Fixnum | INSPECT: 1 |0" +
-            "       1.0| TITLE: Value 1 | CLASS: Fixnum | INSPECT: 1 |1.0       1.1| TITLE: Value 2 | CLASS: Hash | COUNT: 2 " +
+            "       1.0| TITLE: Some value | CLASS: Fixnum | INSPECT: 1 |1.0       1.1| TITLE: Value 2 | CLASS: Hash | COUNT: 2 " +
             "| INSPECT: {:a=>[], :b=>2} |1.1"
           expect(logger).to receive(:debug).with(expected_message)
-          Kazus.log(:debug, "Something went wrong", 1, "Value 1" => 1, "Value 2" => {a: [], b: 2})
+          Kazus.log(:debug, "Something went wrong", 1, some_value: 1, "Value 2" => {a: [], b: 2})
         end
 
         it "logs a Hash not detailed as forelast argument" do

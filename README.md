@@ -164,10 +164,6 @@ will output
 
 Right now, the log message gets created every time you call ```Kazus.log```, even if the app is configured to not log a message with a low level like the level you might have chosen for your ```Kazus.log``` call. I'll appreciate if anyone hints to a possible solution. Until then, you might not want to spread tons of ```Kazus.log(:debug)``` calls all over your app, but rather use it to log in unexpected situations or to quickly debug something, with the intention to remove the method call shortly after.
 
-* Solve log level problem.
-
-* Transform symbols into niceley readable strings as inspection titles
-
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/esBeee/kazus. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
