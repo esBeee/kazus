@@ -166,7 +166,7 @@ Right now, the log message gets created every time you call ```Kazus.log```, eve
 
 * Solve log level problem.
 
-* Inform about no errors if errors.full_messages exists and is empty
+* Transform symbols into niceley readable strings as inspection titles
 
 ## Contributing
 

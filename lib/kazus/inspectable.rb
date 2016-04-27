@@ -111,7 +111,8 @@ module Kazus
       # Rescue in case this object doesn't implement the required methods.
       begin
         error_messages = @object.errors.full_messages
-        pick_up_data("ERRORS", error_messages.join(", "))
+        message = error_messages.length == 0 ? "[]" : error_messages.join(", ")
+        pick_up_data("ERRORS", message)
       rescue
         # Don't really care.
       end

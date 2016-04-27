@@ -151,6 +151,34 @@ describe Kazus do
           expect(logger).to receive(:debug).with(expected_message)
           Kazus.log(nil)
         end
+
+        describe "called with an object, that responds to the method call '.errors.full_messages' (like an ActiveModel instance does)" do
+          it "logs error messages if there are any" do
+            # Create a double that accepts the method call '.errors.full_messages' and
+            # let return an array of strings.
+            errors_double = double("errors")
+            ar_object = double("ar_object", errors: errors_double, count: nil, backtrace: nil)
+            allow(errors_double).to receive(:full_messages) { ["This is why it's invalid", "And this is another reason"] }
+
+            expected_message = "[KAZUS|debug] RELATED OBJECTS:       0| CLASS: RSpec::Mocks::Double | COUNT:  | ERRORS: " +
+              "This is why it's invalid, And this is another reason | INSPECT: #<Double \"ar_object\"> | TO_S: #[Double \"ar_object\"] |0"
+            expect(logger).to receive(:debug).with(expected_message)
+            Kazus.log(ar_object)
+          end
+
+          it "logs the information that no  errors exist if '.errors.full_messages' returns an empty array" do
+            # Create a double that accepts the method call '.errors.full_messages' and
+            # let return an array of strings.
+            errors_double = double("errors")
+            ar_object = double("ar_object", errors: errors_double, count: nil, backtrace: nil)
+            allow(errors_double).to receive(:full_messages) { [] }
+
+            expected_message = "[KAZUS|debug] RELATED OBJECTS:       0| CLASS: RSpec::Mocks::Double | COUNT:  | " +
+              "ERRORS: [] | INSPECT: #<Double \"ar_object\"> | TO_S: #[Double \"ar_object\"] |0"
+            expect(logger).to receive(:debug).with(expected_message)
+            Kazus.log(ar_object)
+          end
+        end
       end
     end
   end
