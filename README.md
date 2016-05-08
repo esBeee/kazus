@@ -1,4 +1,4 @@
-# kazus gem
+# Kazus gem
 
 Kazus provides a simple logging helper. It accepts any amount or type of arguments and logs everything well readable, while including eventually given information like backtraces, validation errors of ActiveModel instances (the gem doesn't depend on rails, though) or the object's length (of an array or a hash). It is designed to not throw errors whatever the arguments are.
 
@@ -11,13 +11,13 @@ Rails.logger.error "@statement has unexpected validation errors: #{@statement.er
 can be replaced by
 
 ```ruby
-Kazus.log :error, "Unexpected validation errors", "@statement" => @statement, "Another value" => 5
+Kazus.log :error, "Unexpected validation errors", "@statement" => @statement
 ```
 
 which logs
 
 ```
-[KAZUS|error] Unexpected validation errors -- RELATED OBJECTS:       0.0| TITLE: @statement | CLASS: Statement | ERRORS: User must exist, body can't be blank | INSPECT: #<Statement id: nil, user_id: nil, body: nil, created_at: nil, updated_at: nil> | TO_S: #<Statement:0x007f9a971683c8> |0.0       0.1| TITLE: Another value | CLASS: Fixnum | INSPECT: 5 |0.1
+[KAZUS|error] Unexpected validation errors -- RELATED OBJECTS:       0.0| TITLE: @statement | CLASS: Statement | ERRORS: User must exist, body can't be blank | INSPECT: #<Statement id: nil, user_id: nil, body: nil, created_at: nil, updated_at: nil> | TO_S: #<Statement:0x007f9a971683c8> |0.0
 ```
 
 or simply
@@ -44,10 +44,6 @@ And then execute:
 
     $ bundle
 
-Or install it yourself as:
-
-    $ gem install kazus
-
 ## Configuration
 
 ### In general
@@ -55,7 +51,7 @@ Or install it yourself as:
 You can configure kazus to use another logger than the default [Logger](http://ruby-doc.org/stdlib-2.1.0/libdoc/logger/rdoc/Logger.html). To do so, make sure to call `Kazus.configure` with a block, like
 
 ```ruby
-Kazus.configuration do |config|
+Kazus.configure do |config|
   config.logger = Rails.logger
 end
 ```
@@ -104,7 +100,7 @@ If the second argument is a string (while the first argument is a valid log leve
 
 The third and any following argument will always be interpreted as objects to be inspected.
 
-### Pattern
+#### Pattern
 
 All messages include the sequence of letters ```[KAZUS|```. I use this to parse the logs for important messages. If you want to parse for certain log levels, for example ```fatal```, the pattern is ```[KAZUS|fatal]```. Same goes for any other log level named above.
 
@@ -164,10 +160,6 @@ will output
 [KAZUS|info] RELATED OBJECTS:       0| CLASS: NilClass | INSPECT: nil |0       1| CLASS: Statement | ERRORS: User must exist, body can't be blank | INSPECT: #<Statement id: nil, user_id: nil, body: nil, created_at: nil, updated_at: nil> | TO_S: #<Statement:0x007fb108353318> |1
 ```
 
-## TODO
-
-Right now, the log message gets created every time you call ```Kazus.log```, even if the app is configured to not log a message with a low level like the level you might have chosen for your ```Kazus.log``` call. I'll appreciate if anyone hints to a possible solution. Until then, you might not want to spread tons of ```Kazus.log(:debug)``` calls all over your app, but rather use it to log in unexpected situations or to quickly debug something, with the intention to remove the method call shortly after.
-
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/esBeee/kazus. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
@@ -176,4 +168,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/esBeee
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
