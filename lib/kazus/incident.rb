@@ -27,6 +27,7 @@ module Kazus
       # Log the message with the given logger.
       begin
         Kazus.configuration.logger.send(@log_level, inspection)
+        inspection
       rescue
         # TODO: Whatever can be done in this case
       end

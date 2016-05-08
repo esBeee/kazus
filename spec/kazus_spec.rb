@@ -23,13 +23,13 @@ describe Kazus do
   end
 
   describe "#log" do
-    describe "when user didn't configure a logger" do
-      it "logs without throwing an exception" do
-        expect(Kazus.log()).to eq(true)
+    context "when user didn't configure a logger" do
+      it "logs without throwing an exception and returns the inspection" do
+        expect(Kazus.log()).to eq("[KAZUS|warn] You are calling #Kazus.log without arguments.")
       end
     end
 
-    describe "when user configured a logger" do
+    context "when user configured a logger" do
       let(:logger) { double("logger") }
 
       before do
@@ -207,6 +207,44 @@ describe Kazus do
             expect(logger).to receive(symbol_representation).with(expected_message)
             Kazus.log(valid_log_level, "This and that went wrong")
           end
+        end
+      end
+    end
+
+    context "when the logger has defined a valid log level" do
+      let(:logger) { double("logger") }
+
+      before do
+        Kazus.configure do |config|
+          config.logger = logger
+        end
+      end
+
+      context "when the incident's log level equals the loggers level" do
+        let(:log_level) { 3 }
+
+        before do
+          # Make sure the configured logger returns a valid log level.
+          allow(logger).to receive(:level) { log_level }
+        end
+
+        it "logs the incident" do
+          expect(logger).to receive(:error) # Log level 3 corresponds to log level :error
+          Kazus.log log_level, "This and that happened"
+        end
+      end
+
+      context "when the incident's log level is beyond the loggers level" do
+        let(:log_level) { 3 }
+
+        before do
+          # Make sure the configured logger returns a valid log level.
+          allow(logger).to receive(:level) { log_level + 1 }
+        end
+
+        it "doesn't log the incident" do
+          expect(logger).not_to receive(:error) # Log level 3 corresponds to log level :error
+          Kazus.log log_level, "This and that happened"
         end
       end
     end

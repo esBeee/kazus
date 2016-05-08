@@ -22,11 +22,16 @@ module Kazus
       # will be logged, and what objects will be inspected.
       log_level, incident_description, objects_to_inspect = map_args(args)
 
+      # Return if the current logger has set a log level and the current
+      # incident's log level is beyond the logger's log level.
+      return if severity_beyond_log_level(log_level)
+
       incident = Incident.new(
         log_level: log_level,
         description: incident_description,
         objects_to_inspect: objects_to_inspect
       )
+
       incident.log
     end
 
@@ -92,6 +97,17 @@ module Kazus
         requested_log_level_symbol = log_level.class == String ? log_level.downcase.to_sym : log_level
         LOG_LEVELS.include?(requested_log_level_symbol) ? requested_log_level_symbol : nil
       end
+    end
+
+    # Returns true if the current logger has set a log level and the given
+    # log level is beyond the logger's log level.
+    def severity_beyond_log_level log_level
+      loggers_log_level = standardize_log_level(Kazus.configuration.logger.level)
+      if loggers_log_level && LOG_LEVELS.index(log_level) < LOG_LEVELS.index(loggers_log_level)
+        return true
+      end
+    rescue Exception => e
+      # Just ignore if this logger hasn't defined a log level.
     end
   end
 end
