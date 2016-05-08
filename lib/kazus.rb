@@ -10,7 +10,7 @@ module Kazus
       # Make sure a logger is available if gem wasn't configured until now.
       # The Configuration class defaults to the ruby Logger (STDOUT). Learn more
       # in kazus/configuration.rb.
-      Kazus.configuration ||= Configuration.new
+      ensure_presence_of_configuration
 
       # Check if function was called without arguments and return in that case.
       if args.length == 0

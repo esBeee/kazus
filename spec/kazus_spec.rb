@@ -1,6 +1,27 @@
 require 'spec_helper'
 
 describe Kazus do
+  # Make sure the configuration settings from the last example
+  # doesn't affect the next.
+  after(:each) { Kazus.configuration = nil }
+
+  describe "#configure" do
+    describe "setting a logger" do
+      let(:logger) { double("logger") }
+
+      before do
+        Kazus.configure do |config|
+          config.logger = logger
+        end
+      end
+
+      it "now logs with that logger" do
+        expect(logger).to receive(:debug)
+        Kazus.log "Log something"
+      end
+    end
+  end
+
   describe "#log" do
     describe "when user didn't configure a logger" do
       it "logs without throwing an exception" do
