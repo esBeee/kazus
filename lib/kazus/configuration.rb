@@ -1,6 +1,6 @@
 # Require the default ruby logger 'Logger' in case the user didn't configure
 # a logger.
-require 'logger'
+require "logger"
 
 module Kazus
   # This class holds the configuration for the kazus gem.

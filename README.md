@@ -70,8 +70,6 @@ to copy an initialzer file into `config/initializers/`.
 
 ## Usage
 
-Kazus provides only one method:
-
 ### #Kazus.log
 
 Can be called with an arbitrary amount of arguments without raising an exception. It doesn't make sense to call it without arguments, though. It'll log a warning in this case.
@@ -103,6 +101,10 @@ The third and any following argument will always be interpreted as objects to be
 #### Pattern
 
 All messages include the sequence of letters ```[KAZUS|```. I use this to parse the logs for important messages. If you want to parse for certain log levels, for example ```fatal```, the pattern is ```[KAZUS|fatal]```. Same goes for any other log level named above.
+
+### #Kazus.s
+
+Does almost the same as ```Kazus.log``` but instead of using the configured logger simply uses ```puts```, to log the inspection to STDOUT. Ideal for quick debugging purposes.
 
 ## Examples
 

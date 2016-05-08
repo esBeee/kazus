@@ -22,9 +22,11 @@ module Kazus
       # will be logged, and what objects will be inspected.
       log_level, incident_description, objects_to_inspect = map_args(args)
 
+      puts_only = __callee__ == :s
+
       # Return if the current logger has set a log level and the current
       # incident's log level is beyond the logger's log level.
-      return if severity_beyond_log_level(log_level)
+      return if !puts_only && severity_beyond_log_level(log_level)
 
       incident = Incident.new(
         log_level: log_level,
@@ -32,8 +34,14 @@ module Kazus
         objects_to_inspect: objects_to_inspect
       )
 
-      incident.log
+      if puts_only
+        puts incident.inspection
+      else
+        incident.log
+      end
     end
+
+    alias_method :s, :log
 
 
     private

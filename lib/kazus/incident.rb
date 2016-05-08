@@ -20,17 +20,16 @@ module Kazus
     # Comissions the inspections of all given information and merges them
     # into one string to be logged.
     def log
+      # Log the message with the given logger.
+      Kazus.configuration.logger.send(@log_level, inspection)
+    rescue
+      # TODO: Whatever can be done in this case
+    end
+
+    def inspection
       inspection = "[KAZUS|#{@log_level}]"
       inspection += " " + @description if @description
       inspection += objects_to_inspect_inspection # Can be a blank string if no objects are given.
-
-      # Log the message with the given logger.
-      begin
-        Kazus.configuration.logger.send(@log_level, inspection)
-        inspection
-      rescue
-        # TODO: Whatever can be done in this case
-      end
     end
 
 

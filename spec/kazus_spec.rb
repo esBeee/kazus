@@ -24,8 +24,8 @@ describe Kazus do
 
   describe "#log" do
     context "when user didn't configure a logger" do
-      it "logs without throwing an exception and returns the inspection" do
-        expect(Kazus.log()).to eq("[KAZUS|warn] You are calling #Kazus.log without arguments.")
+      it "logs without throwing an exception" do
+        expect(Kazus.log()).to eq(true)
       end
     end
 
@@ -247,6 +247,25 @@ describe Kazus do
           Kazus.log log_level, "This and that happened"
         end
       end
+    end
+  end
+
+  describe "#s" do
+    let(:logger) { double("logger") }
+
+    before do
+      Kazus.configure do |config|
+        config.logger = logger
+      end
+    end
+
+    it "ignores the configured logger and logs to STDOUT" do
+      # The configured logger isn't being used
+      expect(logger).not_to receive(:info)
+
+      expect(STDOUT).to receive(:puts).with("[KAZUS|info] This and that...")
+
+      Kazus.s(:info, "This and that...")
     end
   end
 end
