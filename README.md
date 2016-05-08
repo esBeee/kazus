@@ -70,6 +70,8 @@ to copy an initialzer file into `config/initializers/`.
 
 ## Usage
 
+The provisioned methods are:
+
 ### #Kazus.log
 
 Can be called with an arbitrary amount of arguments without raising an exception. It doesn't make sense to call it without arguments, though. It'll log a warning in this case.
