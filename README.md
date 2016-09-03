@@ -34,15 +34,19 @@ to log
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Run
 
-```ruby
-gem 'kazus', git: 'git://github.com/esBeee/kazus.git'
+```shell
+gem install kazus
 ```
 
-And then execute:
+or add this line to your application's Gemfile
 
-    $ bundle
+```ruby
+gem 'kazus'
+```
+
+and run `$ bundle install`.
 
 ## Configuration
 
