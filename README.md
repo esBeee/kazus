@@ -1,4 +1,4 @@
-# Kazus gem
+# Kazus
 
 Kazus provides a simple logging helper. It accepts any amount or type of arguments and logs everything well readable, while including eventually given information like backtraces, validation errors of ActiveModel instances (the gem doesn't depend on rails, though) or the object's length (of an array or a hash). It is designed to not throw errors whatever the arguments are.
 
