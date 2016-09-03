@@ -36,8 +36,8 @@ to log
 
 Run
 
-```shell
-gem install kazus
+```sh
+$ gem install kazus
 ```
 
 or add this line to your application's Gemfile
