@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Kazus do
   # Make sure the configuration settings from the last example
-  # doesn't affect the next.
+  # don't affect the next.
   after(:each) { Kazus.configuration = nil }
 
   describe "#configure" do
@@ -62,8 +62,8 @@ describe Kazus do
 
       context "when first argument is not a valid log level" do
         it "logs an inspection of all given objects if it is not a string" do
-          expected_message = "[KAZUS|debug] RELATED OBJECTS:       0| CLASS: Fixnum | INSPECT: -1 |0       1| CLASS: " +
-            "String | INSPECT: \"Something\" | TO_S: Something |1       2| CLASS: Array | COUNT: 0 | INSPECT: [] |2"
+          expected_message = "[KAZUS|debug] RELATED OBJECTS:       0| CLASS: Fixnum | INSPECT: -1 |0       " +
+            "1| CLASS: String | INSPECT: \"Something\" |1       2| CLASS: Array | COUNT: 0 | INSPECT: [] |2"
           expect(logger).to receive(:debug).with(expected_message)
           Kazus.log(-1, "Something", [])
         end
@@ -246,6 +246,20 @@ describe Kazus do
           expect(logger).not_to receive(:error) # Log level 3 corresponds to log level :error
           Kazus.log log_level, "This and that happened"
         end
+      end
+    end
+
+    context 'when #to_s and #inspect deliver the same content' do
+      let(:logger) { double("logger") }
+
+      before do
+        Kazus.configure { |config| config.logger = logger }
+      end
+
+      it 'does only include the result of #inspect' do
+        expected_message = '[KAZUS|warn] This and that happened! -- RELATED OBJECTS:       0| CLASS: String | INSPECT: "I\'m a string!" |0'
+        expect(logger).to receive(:warn).with(expected_message)
+        Kazus.log :warn, 'This and that happened!', "I'm a string!"
       end
     end
   end

@@ -20,7 +20,7 @@ module Kazus
     end
 
     # Returns a formatted string that gives a good insight on the object.
-    # Takes a title as first argument optionally, currently used in case 
+    # Takes a title as first argument optionally, currently used in case
     # this object is a value to a key of a hash (then the key is the title).
     def inspection title=nil
       # If this object is a hash and options[:detailed] is true,
@@ -130,8 +130,14 @@ module Kazus
 
       # Don't collect if string is blank or it's the same as #inspect
       # delivered.
-      unless s.length == 0 || @data["INSPECT"] == s
+      unless s.length == 0 || @data["INSPECT"].gsub(/(\A"|"\Z)/, '') == s
         pick_up_data("TO_S", @object.to_s)
+
+        # If #inspect delivered the same content, remove
+        # the result of #inspect.
+        # if @data["INSPECT"].gsub(/(\A"|"\Z)/, '') == s
+        #   @data.delete("INSPECT")
+        # end
       end
     end
 
