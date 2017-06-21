@@ -98,7 +98,7 @@ module Kazus
     #
     # Returns nil if given log_level is not valid.
     def standardize_log_level log_level
-      if log_level.class == Fixnum
+      if log_level.is_a?(Integer)
         return nil if log_level < 0 # Prevent the next line from handing out anything in this case
         LOG_LEVELS[log_level] # Returns nil if log_level > 5
       else
